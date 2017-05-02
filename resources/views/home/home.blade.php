@@ -1,13 +1,32 @@
 @extends('layouts.app')
 @section('content')
+	<style>
+		.ui-combobox {
+			position: relative;
+			display: inline-block;
+		}
+		.ui-combobox-toggle {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			margin-left: -1px;
+			padding: 0;
+			/* support: IE7 */
+			*height: 1.7em;
+			*top: 0.1em;
+		}
+		.ui-combobox-input {
+			margin: 0;
+			padding: 0.3em;
+		}
+	</style>
 			
             <div class="hero" data-bg-image="{{ asset('images/banner-new.jpg') }}">
 				<div class="container">
 					<form action="#" class="find-location">
-						<input type="text" placeholder="Find your location...">
-						<input type="submit" value="Find">
+						<input type="text" id="awxSearchTextBox" class="awxSearchTextBox" placeholder="Find your location...">
+						{{--<input type="submit" id="awxSearchButton" value="Find">--}}
 					</form>
-
 				</div>
 			</div>
 			<div class="forecast-table">
@@ -15,11 +34,11 @@
 					<div class="forecast-container">
 						<div class="today forecast">
 							<div class="forecast-header">
-								<div class="day">Monday</div>
-								<div class="date">6 Oct</div>
+								<div class="day">{{ \Carbon::now()->format('l') }}</div>
+								<div class="date">{{ \Carbon::now()->format('d M') }}</div>
 							</div> <!-- .forecast-header -->
 							<div class="forecast-content">
-								<div class="location">New York</div>
+								<div class="location" id="location"></div>
 								<div class="degree">
 									<div class="num">23<sup>o</sup>C</div>
 									<div class="forecast-icon">
@@ -33,7 +52,7 @@
 						</div>
 						<div class="forecast">
 							<div class="forecast-header">
-								<div class="day">Tuesday</div>
+								<div class="day">{{ \Carbon::tomorrow()->format('l')  }}</div>
 							</div> <!-- .forecast-header -->
 							<div class="forecast-content">
 								<div class="forecast-icon">
@@ -105,6 +124,12 @@
 						</div>
 					</div>
 				</div>
+				{{--<div class="container">--}}
+					{{--<p><strong>Headline: </strong>"<span id="headline"></span>"</p>--}}
+				{{--</div>--}}
 			</div>
-		
+
+@endsection
+
+@section('pageScripts')
 @endsection

@@ -13,7 +13,8 @@
 
 		<!-- Loading main css file -->
 		<link rel="stylesheet" href="{{ asset('css/style.css') }}">
-		
+		<link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}">
+
 		<!--[if lt IE 9]>
 		<script src="{{ asset('js/ie-support/html5.js') }}"></script>
 		<script src="{{ asset('js/ie-support/respond.js') }}"></script>
@@ -35,6 +36,8 @@
         </div>
 
         <script src="{{ asset('js/jquery-1.11.1.min.js') }}"></script>
+		<script src="{{ asset('js/jquery-ui.min.js') }}"></script>
+        <script src="{{ asset('js/pollenData.js') }}"></script>
 	    <script src="{{ asset('js/plugins.js') }}"></script>
 	    <script src="{{ asset('js/app.js') }}"></script>
 
