@@ -20,6 +20,14 @@
 			padding: 0.3em;
 		}
 	</style>
+
+	<?php
+//    $request = \Request::instance();
+//    //$request->setTrustedProxies(array('127.0.0.1')); // only trust proxy headers coming from the IP addresses on the array (change this to suit your needs)
+//    $ip = $request->getClientIp();
+//    dd($request);
+	?>
+
 			
             <div class="hero" data-bg-image="{{ asset('images/banner-new.jpg') }}">
 				<div class="container">
@@ -50,78 +58,80 @@
 								<span><img src="{{ asset('images/icon-compass.png') }}" alt="">East</span>
 							</div>
 						</div>
-						<div class="forecast">
-							<div class="forecast-header">
-								<div class="day">{{ \Carbon::tomorrow()->format('l')  }}</div>
-							</div> <!-- .forecast-header -->
-							<div class="forecast-content">
-								<div class="forecast-icon">
-									<img src="{{ asset('images/icons/icon-3.svg') }}" alt="" width=48>
+						@for($i = 1; $i < 7; $i++)
+							<div class="forecast">
+								<div class="forecast-header">
+									<div class="day">{{ \Carbon::now()->addDays($i)->format('l')  }}</div>
+								</div> <!-- .forecast-header -->
+								<div class="forecast-content">
+									<div class="forecast-icon">
+										<img src="{{ asset('images/icons/icon-3.svg') }}" alt="" width=48>
+									</div>
+									<div class="degree">23<sup>o</sup>C</div>
+									<small>18<sup>o</sup></small>
 								</div>
-								<div class="degree">23<sup>o</sup>C</div>
-								<small>18<sup>o</sup></small>
 							</div>
-						</div>
-						<div class="forecast">
-							<div class="forecast-header">
-								<div class="day">Wednesday</div>
-							</div> <!-- .forecast-header -->
-							<div class="forecast-content">
-								<div class="forecast-icon">
-									<img src="{{ asset('images/icons/icon-5.svg') }}" alt="" width=48>
-								</div>
-								<div class="degree">23<sup>o</sup>C</div>
-								<small>18<sup>o</sup></small>
-							</div>
-						</div>
-						<div class="forecast">
-							<div class="forecast-header">
-								<div class="day">Thursday</div>
-							</div> <!-- .forecast-header -->
-							<div class="forecast-content">
-								<div class="forecast-icon">
-									<img src="{{ asset('images/icons/icon-7.svg') }}" alt="" width=48>
-								</div>
-								<div class="degree">23<sup>o</sup>C</div>
-								<small>18<sup>o</sup></small>
-							</div>
-						</div>
-						<div class="forecast">
-							<div class="forecast-header">
-								<div class="day">Friday</div>
-							</div> <!-- .forecast-header -->
-							<div class="forecast-content">
-								<div class="forecast-icon">
-									<img src="{{ asset('images/icons/icon-12.svg') }}" alt="" width=48>
-								</div>
-								<div class="degree">23<sup>o</sup>C</div>
-								<small>18<sup>o</sup></small>
-							</div>
-						</div>
-						<div class="forecast">
-							<div class="forecast-header">
-								<div class="day">Saturday</div>
-							</div> <!-- .forecast-header -->
-							<div class="forecast-content">
-								<div class="forecast-icon">
-									<img src="{{ asset('images/icons/icon-13.svg') }}" alt="" width=48>
-								</div>
-								<div class="degree">23<sup>o</sup>C</div>
-								<small>18<sup>o</sup></small>
-							</div>
-						</div>
-						<div class="forecast">
-							<div class="forecast-header">
-								<div class="day">Sunday</div>
-							</div> <!-- .forecast-header -->
-							<div class="forecast-content">
-								<div class="forecast-icon">
-									<img src="{{ asset('images/icons/icon-14.svg') }}" alt="" width=48>
-								</div>
-								<div class="degree">23<sup>o</sup>C</div>
-								<small>18<sup>o</sup></small>
-							</div>
-						</div>
+						@endfor
+						{{--<div class="forecast">--}}
+							{{--<div class="forecast-header">--}}
+								{{--<div class="day">Wednesday</div>--}}
+							{{--</div> <!-- .forecast-header -->--}}
+							{{--<div class="forecast-content">--}}
+								{{--<div class="forecast-icon">--}}
+									{{--<img src="{{ asset('images/icons/icon-5.svg') }}" alt="" width=48>--}}
+								{{--</div>--}}
+								{{--<div class="degree">23<sup>o</sup>C</div>--}}
+								{{--<small>18<sup>o</sup></small>--}}
+							{{--</div>--}}
+						{{--</div>--}}
+						{{--<div class="forecast">--}}
+							{{--<div class="forecast-header">--}}
+								{{--<div class="day">Thursday</div>--}}
+							{{--</div> <!-- .forecast-header -->--}}
+							{{--<div class="forecast-content">--}}
+								{{--<div class="forecast-icon">--}}
+									{{--<img src="{{ asset('images/icons/icon-7.svg') }}" alt="" width=48>--}}
+								{{--</div>--}}
+								{{--<div class="degree">23<sup>o</sup>C</div>--}}
+								{{--<small>18<sup>o</sup></small>--}}
+							{{--</div>--}}
+						{{--</div>--}}
+						{{--<div class="forecast">--}}
+							{{--<div class="forecast-header">--}}
+								{{--<div class="day">Friday</div>--}}
+							{{--</div> <!-- .forecast-header -->--}}
+							{{--<div class="forecast-content">--}}
+								{{--<div class="forecast-icon">--}}
+									{{--<img src="{{ asset('images/icons/icon-12.svg') }}" alt="" width=48>--}}
+								{{--</div>--}}
+								{{--<div class="degree">23<sup>o</sup>C</div>--}}
+								{{--<small>18<sup>o</sup></small>--}}
+							{{--</div>--}}
+						{{--</div>--}}
+						{{--<div class="forecast">--}}
+							{{--<div class="forecast-header">--}}
+								{{--<div class="day">Saturday</div>--}}
+							{{--</div> <!-- .forecast-header -->--}}
+							{{--<div class="forecast-content">--}}
+								{{--<div class="forecast-icon">--}}
+									{{--<img src="{{ asset('images/icons/icon-13.svg') }}" alt="" width=48>--}}
+								{{--</div>--}}
+								{{--<div class="degree">23<sup>o</sup>C</div>--}}
+								{{--<small>18<sup>o</sup></small>--}}
+							{{--</div>--}}
+						{{--</div>--}}
+						{{--<div class="forecast">--}}
+							{{--<div class="forecast-header">--}}
+								{{--<div class="day">Sunday</div>--}}
+							{{--</div> <!-- .forecast-header -->--}}
+							{{--<div class="forecast-content">--}}
+								{{--<div class="forecast-icon">--}}
+									{{--<img src="{{ asset('images/icons/icon-14.svg') }}" alt="" width=48>--}}
+								{{--</div>--}}
+								{{--<div class="degree">23<sup>o</sup>C</div>--}}
+								{{--<small>18<sup>o</sup></small>--}}
+							{{--</div>--}}
+						{{--</div>--}}
 					</div>
 				</div>
 				{{--<div class="container">--}}
@@ -132,4 +142,37 @@
 @endsection
 
 @section('pageScripts')
+	<script>
+        $(document).ready(function(){
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showLocation);
+            } else {
+                $('#location').html('Geolocation is not supported by this browser.');
+            }
+        });
+
+        function showLocation(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+//            console.log(latitude);
+//            console.log(longitude);
+            $.ajax({
+                type:'POST',
+                url:'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&sensor=false',
+                //data:'latitude='+latitude+'&longitude='+longitude,
+                success:function(msg){
+                    console.log(msg);
+//                    if(msg){
+//                        $("#location").html(msg);
+//                    }else{
+//                        $("#location").html('Not Available');
+//                    }
+                },
+				error: function (response){
+                    console.log("error fn: ", response);
+				}
+            });
+        }
+	</script>
+
 @endsection
