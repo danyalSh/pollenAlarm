@@ -21,11 +21,13 @@
 		}
 	</style>
 
+
 	<?php
 //    $request = \Request::instance();
 //    //$request->setTrustedProxies(array('127.0.0.1')); // only trust proxy headers coming from the IP addresses on the array (change this to suit your needs)
 //    $ip = $request->getClientIp();
 //    dd($request);
+//			dd($location)
 	?>
 
 			
@@ -48,10 +50,12 @@
 							<div class="forecast-content">
 								<div class="location" id="location"></div>
 								<div class="degree">
-									<div class="num">23<sup>o</sup>C</div>
+									<div class="num" id="maxTemp"></div>
 									<div class="forecast-icon">
 										<img src="{{ asset('images/icons/icon-1.svg') }}" alt="" width=90>
-									</div>	
+									</div>
+									<br>
+									<small id="minTemp"></small>
 								</div>
 								<span><img src="{{ asset('images/icon-umberella.png') }}" alt="">20%</span>
 								<span><img src="{{ asset('images/icon-wind.png') }}" alt="">18km/h</span>
@@ -72,107 +76,25 @@
 								</div>
 							</div>
 						@endfor
-						{{--<div class="forecast">--}}
-							{{--<div class="forecast-header">--}}
-								{{--<div class="day">Wednesday</div>--}}
-							{{--</div> <!-- .forecast-header -->--}}
-							{{--<div class="forecast-content">--}}
-								{{--<div class="forecast-icon">--}}
-									{{--<img src="{{ asset('images/icons/icon-5.svg') }}" alt="" width=48>--}}
-								{{--</div>--}}
-								{{--<div class="degree">23<sup>o</sup>C</div>--}}
-								{{--<small>18<sup>o</sup></small>--}}
-							{{--</div>--}}
-						{{--</div>--}}
-						{{--<div class="forecast">--}}
-							{{--<div class="forecast-header">--}}
-								{{--<div class="day">Thursday</div>--}}
-							{{--</div> <!-- .forecast-header -->--}}
-							{{--<div class="forecast-content">--}}
-								{{--<div class="forecast-icon">--}}
-									{{--<img src="{{ asset('images/icons/icon-7.svg') }}" alt="" width=48>--}}
-								{{--</div>--}}
-								{{--<div class="degree">23<sup>o</sup>C</div>--}}
-								{{--<small>18<sup>o</sup></small>--}}
-							{{--</div>--}}
-						{{--</div>--}}
-						{{--<div class="forecast">--}}
-							{{--<div class="forecast-header">--}}
-								{{--<div class="day">Friday</div>--}}
-							{{--</div> <!-- .forecast-header -->--}}
-							{{--<div class="forecast-content">--}}
-								{{--<div class="forecast-icon">--}}
-									{{--<img src="{{ asset('images/icons/icon-12.svg') }}" alt="" width=48>--}}
-								{{--</div>--}}
-								{{--<div class="degree">23<sup>o</sup>C</div>--}}
-								{{--<small>18<sup>o</sup></small>--}}
-							{{--</div>--}}
-						{{--</div>--}}
-						{{--<div class="forecast">--}}
-							{{--<div class="forecast-header">--}}
-								{{--<div class="day">Saturday</div>--}}
-							{{--</div> <!-- .forecast-header -->--}}
-							{{--<div class="forecast-content">--}}
-								{{--<div class="forecast-icon">--}}
-									{{--<img src="{{ asset('images/icons/icon-13.svg') }}" alt="" width=48>--}}
-								{{--</div>--}}
-								{{--<div class="degree">23<sup>o</sup>C</div>--}}
-								{{--<small>18<sup>o</sup></small>--}}
-							{{--</div>--}}
-						{{--</div>--}}
-						{{--<div class="forecast">--}}
-							{{--<div class="forecast-header">--}}
-								{{--<div class="day">Sunday</div>--}}
-							{{--</div> <!-- .forecast-header -->--}}
-							{{--<div class="forecast-content">--}}
-								{{--<div class="forecast-icon">--}}
-									{{--<img src="{{ asset('images/icons/icon-14.svg') }}" alt="" width=48>--}}
-								{{--</div>--}}
-								{{--<div class="degree">23<sup>o</sup>C</div>--}}
-								{{--<small>18<sup>o</sup></small>--}}
-							{{--</div>--}}
-						{{--</div>--}}
 					</div>
 				</div>
-				{{--<div class="container">--}}
-					{{--<p><strong>Headline: </strong>"<span id="headline"></span>"</p>--}}
-				{{--</div>--}}
+				<div class="container" style="text-align: center;">
+					<p><strong>Headline: </strong>"<span id="headline"></span>"</p>
+				</div>
 			</div>
+
+
 
 @endsection
 
 @section('pageScripts')
-	<script>
-        $(document).ready(function(){
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showLocation);
-            } else {
-                $('#location').html('Geolocation is not supported by this browser.');
-            }
+<script>
+	$(function () {
+        getLocation('{{ $location->city . ',' .  $location->state }}', function (err, data){
+            $('#location').text(data[0].LocalizedName);
+            awxGetCurrentConditions(data[0].Key);
         });
-
-        function showLocation(position) {
-            var latitude = position.coords.latitude;
-            var longitude = position.coords.longitude;
-//            console.log(latitude);
-//            console.log(longitude);
-            $.ajax({
-                type:'POST',
-                url:'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&sensor=false',
-                //data:'latitude='+latitude+'&longitude='+longitude,
-                success:function(msg){
-                    console.log(msg);
-//                    if(msg){
-//                        $("#location").html(msg);
-//                    }else{
-//                        $("#location").html('Not Available');
-//                    }
-                },
-				error: function (response){
-                    console.log("error fn: ", response);
-				}
-            });
-        }
-	</script>
+    })
+</script>
 
 @endsection

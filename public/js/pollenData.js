@@ -1,5 +1,4 @@
 // Configure our weather widget during jQuery.OnReady
-$(function () {
 
     var isMetric = true;
     var locationUrl = "";
@@ -11,17 +10,19 @@ $(function () {
     // Contact AccuWeather to get an official key. They key in this
     // example is temporary and should NOT be used it in production.
     var apiKey = "hoArfRosT1215";
-    var apiKey2 = "ZLcq2kvJrV91rVQpZTjiRNhwxFfdSPSq";
+    var apiKey2 = "QDYakWAAA8jYwF772xlDzvoNOeV5qZmq";
+
 
     var searchCity = function (request, response) {
-        locationUrl = "http://apidev.accuweather.com/locations/v1/search?q=" + request.term + "&apikey=hoArfRosT1215";
+        locationUrl = "http://apidev.accuweather.com/locations/v1/search?q=" + request.term + "&apikey="+ apiKey;
         $.ajax({
             type: "GET",
             url: locationUrl,
             dataType: "jsonp",
             cache: true,                    // Use cache for better reponse times
-            jsonpCallback: "awxCallback",   // Prevent unique callback name for better reponse times
+            // jsonpCallback: "awxCallback",   // Prevent unique callback name for better reponse times
             success: function(data) {
+                // console.log(data);
                 response($.map(data, function (el) {
                     return {
                         label: el.LocalizedName + ', ' + el.Country.ID,
@@ -97,8 +98,8 @@ $(function () {
     };
 
 
-    var awxGetCurrentConditions = function (locationKey) {
-        $('#pollenTable').show();
+     function awxGetCurrentConditions (locationKey) {
+        //$('#pollenTable').show();
         url = "http://dataservice.accuweather.com/forecasts/v1/daily/5day/"+ locationKey +"?apikey="+apiKey2+"&language="+language+"&details=true&metric=true";
         $.ajax({
             type: "GET",
@@ -107,7 +108,10 @@ $(function () {
             cache: true,
             jsonpCallback: "awxCallback",
             success: function (data) {
-                // console.log(data);
+                console.log("awxGetCurrentConditions", data);
+                $('#headline').text(data.Headline.Text);
+                $('#maxTemp').html(Math.round(data.DailyForecasts[0].Temperature.Maximum.Value) + "<sup>o</sup>" + data.DailyForecasts[0].Temperature.Maximum.Unit);
+                $('#minTemp').html(Math.round(data.DailyForecasts[0].Temperature.Minimum.Value) + "<sup>o</sup>"  + data.DailyForecasts[0].Temperature.Minimum.Unit);
                     //pollenData = data.DailyForecasts;
                     window.pollenData = data;
                 //    var html = "";
@@ -140,6 +144,27 @@ $(function () {
     //     }
     // });
 
+/**
+ * Custom functions
+ **/
+
+function getLocation (postalCode, cb) {
+    locationUrl = "http://apidev.accuweather.com/locations/v1/search?q=" + postalCode + "&apikey=hoArfRosT1215";
+    $.ajax({
+        type: "GET",
+        url: locationUrl,
+        dataType: "jsonp",
+        cache: true,
+        jsonpCallback: "awxCallback",
+        success: function(data) {
+            //console.log(data[0].Key);
+//					return data[0].Key;
+            cb(null, data);
+        }
+    });
+}
+
+$(function () {
     $(".awxSearchTextBox").autocomplete({
         source: function (request, response) {
             searchCity(request, response);
@@ -149,6 +174,7 @@ $(function () {
             this.value = ui.item.label;
             $('#location').text(ui.item.label);
             var data = awxGetCurrentConditions(ui.item.value);
+            console.log(data);
             setTimeout(function (){
                 //console.log(data);
 //                $('#headline').text(data.Headline.Text);
@@ -164,4 +190,3 @@ $(function () {
     });
 
 });
-// ]]>
