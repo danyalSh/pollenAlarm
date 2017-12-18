@@ -1,6 +1,21 @@
 // Configure our weather widget during jQuery.OnReady
 $(function () {
 
+    /**
+     * Get User Pollen Data Based on User Location
+     * **/
+    // var location = {
+    //     "term" : $('#postalCode').val()
+    // };
+    // console.log(location);
+    //
+    // var citySearch = searchCity(location);
+    // console.log(citySearch);
+
+    /**
+     * If User Searches for Location
+     * **/
+
     var isMetric = true;
     var locationUrl = "";
     var currentConditionsUrl = "";
@@ -13,7 +28,8 @@ $(function () {
     var apiKey = "hoArfRosT1215";
     var apiKey2 = "ZLcq2kvJrV91rVQpZTjiRNhwxFfdSPSq";
 
-    var searchCity = function (request, response) {
+    function searchCity(request, response) {
+        console.log(request);
         locationUrl = "http://apidev.accuweather.com/locations/v1/search?q=" + request.term + "&apikey=hoArfRosT1215";
         $.ajax({
             type: "GET",

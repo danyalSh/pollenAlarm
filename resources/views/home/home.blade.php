@@ -20,6 +20,7 @@
 			padding: 0.3em;
 		}
 	</style>
+{{--	{{ dd($location) }}--}}
 
 	<?php
 //    $request = \Request::instance();
@@ -33,7 +34,7 @@
 				<div class="container">
 					<form action="#" class="find-location">
 						<input type="text" id="awxSearchTextBox" class="awxSearchTextBox" placeholder="Find your location...">
-						{{--<input type="submit" id="awxSearchButton" value="Find">--}}
+						<input type="hidden" disabled id="postalCode" value="{{ $location->postal_code }}">
 					</form>
 				</div>
 			</div>
@@ -142,37 +143,11 @@
 @endsection
 
 @section('pageScripts')
-	<script>
-        $(document).ready(function(){
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showLocation);
-            } else {
-                $('#location').html('Geolocation is not supported by this browser.');
-            }
-        });
 
-        function showLocation(position) {
-            var latitude = position.coords.latitude;
-            var longitude = position.coords.longitude;
-//            console.log(latitude);
-//            console.log(longitude);
-            $.ajax({
-                type:'POST',
-                url:'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&sensor=false',
-                //data:'latitude='+latitude+'&longitude='+longitude,
-                success:function(msg){
-                    console.log(msg);
-//                    if(msg){
-//                        $("#location").html(msg);
-//                    }else{
-//                        $("#location").html('Not Available');
-//                    }
-                },
-				error: function (response){
-                    console.log("error fn: ", response);
-				}
-            });
-        }
+	<script>
+		$(document).ready(function (){
+//		    console.log('1: ', window.postalCode.term, $.now);
+		});
 	</script>
 
 @endsection
