@@ -89,11 +89,13 @@
 
 @section('pageScripts')
 <script>
+window.locationQuery = '{{ $location->city . ',' .  $location->state }}';
+getZip();
 	$(function () {
-        getLocation('{{ $location->city . ',' .  $location->state }}', function (err, data){
-            $('#location').text(data[0].LocalizedName);
-            awxGetCurrentConditions(data[0].Key);
-        });
+        {{--getLocation('{{ $location->city . ',' .  $location->state }}', function (err, data){--}}
+            {{--$('#location').text(data[0].LocalizedName);--}}
+            {{--awxGetCurrentConditions(data[0].Key);--}}
+        {{--});--}}
     })
 </script>
 
